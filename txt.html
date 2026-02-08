@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Assistente vocale</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            html{
+                text-align: center;
+                background-image: url(cancelleria.jpg);
+                background-repeat: no-repeat;
+                background-attachment: fixed; 
+                background-size: cover;
+                background-position: center;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            
+            #back{
+                width: 1200px;
+                height: 800px;
+            }
+            #info{
+                text-align: center;
+                display: flex;
+                gap: 60px;
+                padding-left: 430px;
+                padding-right: 430px;
+                background-color: aqua;
+            }
+            #info:hover{
+                cursor: pointer;
+                user-select: none;
+            }
+            #testo{
+                border-radius: 2px;
+                border: 0px;
+            }
+            #bottone{
+                border-radius: 10px;
+                background-color: coral;
+            }
+            #bottone:hover{
+                user-select: none;
+                cursor: pointer;
+            }
+
+
+            #sisal_div:hover img#chiudisisal{
+            opacity: 1;
+        }
+        #sisal{
+            border: 2px solid #333; 
+            float: left;
+            position: fixed;
+            z-index: 1;
+        }
+        #chiudisisal{
+            position: relative;
+            top: 25px;
+            left: 200px;
+            opacity: 0;
+        }
+        #sisal:hover{
+            user-select: none;
+            cursor: auto;
+        }
+        #chiudisisal:hover{
+            cursor: pointer;
+        }
+        #chiudisisal:active{
+            transform: translateY(5px);
+        }
+        #bottom-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-color: #333;
+            color: white;
+            z-index: 9999;
+}
+        #chiudi{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 10%;
+            z-index: 9998;
+            height: 125px;
+            background-color: rgb(0, 0, 0);
+            border-radius: 10px;
+            color: white;
+        }
+        #chiudi:hover{
+            cursor: pointer;
+        }
+        #nvpn:hover{
+            cursor: pointer;
+        }
+        #premium{
+            background-color: dimgray;
+            border-radius: 5px;
+            z-index: 9999999;
+        }
+        #smart-button-container{
+            float: inherit;
+            text-align: center;
+            padding-left: 450px;
+                padding-right: 450px;
+        }
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        </style>
+    </head>
+    <body>
+        
+        <div style="background-color: orange;">
+        <h1>COS READER</h1>
+        </div>
+        <div id="info">
+            <h3 onclick="contactus()">Contact us</h3><a href="https://git-cos.github.io/homepage/"><h3>Other projects</h3></a><h3 onclick="premium()">Pass to premium</h3>
+        </div>
+        <div id="premium">
+        <h2>Passa a premium</h2>
+        <h4>Per vivere un' esperienza senza distrazioni e pubblicità, paga:</h4>
+        <ul>
+            <li>5,00 &euro; per togliere le pubblicità</li>
+            <li>9,50 &euro; per avere un'esperienza più immersiva</li>
+            <button onclick="chiudipremium()">chiudi</button>
+            <button id="paga" onclick="paga()">Paga la cifra desiderata</button>
+        </ul>
+    </div>
+    <div id="tutto">
+        <div id="funzioni">
+        <select id="lingua"> 
+            <option value="it-IT">Italiano</option> 
+            <option value="en-US">English (USA)</option> 
+            <option value="fr-FR">Français</option> 
+            <option value="es-ES">Español</option> 
+        </select>
+        <label>Velocità: 
+            <span id="valoreVelocita">1</span>
+        </label> 
+        <input id="velocita" type="range" min="0.5" max="2" step="0.1" value="1">
+        </div>
+        <h2></h2>
+        <div id="testo">
+        <textarea rows="10" cols="60" id="text" type="text" placeholder="scrivi qui dentro ciò che vuoi"></textarea>
+        </div>
+        <div id="sisal_div">
+    <img onclick="chiudisisal()" src="x.png" id="chiudisisal" height="30" width="30">
+    <a href="https://www.samsung.it/"><img src="samsung.png" height="100" width="220" id="sisal"></a>
+</div>
+        <span id="bottone">
+        <h2 onclick="speak()">Leggi</h2>
+        </span>
+        <h2 id="chiudi" onclick="chiudiNVPN()">Chiudi  x</h2>
+<div id="bottom-banner"> 
+    <video src="Nord VPN Commercial.mp4" autoplay muted width="80" height="50" style="z-index: 9999;" id="nvpn"></video>
+    <h2>Nord VPN</h2>
+    
+</div>
+    </div>
+
+    <div id="smart-button-container">
+        <div style="text-align: center;">
+            <div id="paypal-button-container"></div>
+        </div>
+    </div>
+    </body>
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AWMV57RJ_XBe8netDaUOpCvP4Xre-zykagdA84ushC4Z_hdRKgY4h9HmcMVJ9ewGkuKDwcZpFDhgFt4K&enable-funding=venmo&currency=USD"
+        data-sdk-integration-source="button-factory"></script>
+    <script> 
+    
+    function initPayPalButton() {
+            paypal.Buttons({
+                style: {
+                    shape: 'rect',
+                    color: 'gold',
+                    layout: 'vertical',
+                    label: 'paypal',
+                },
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{ "amount": { "currency_code": "USD", "value": 50 } }]
+                    });
+                },
+
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (orderData) {
+
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                        const element = document.getElementById('paypal-button-container');
+                        element.innerHTML = '';
+                        element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                    });
+                },
+
+                onError: function (err) {
+                    console.log(err);
+                }
+            }).render('#paypal-button-container');
+        }
+        initPayPalButton();
+    document.getElementById("premium").style.display="none";
+    document.getElementById("smart-button-container").style.display="none";
+    function speak() { 
+        const testo = document.getElementById('text').value; 
+        const lingua = document.getElementById("lingua").value; 
+        const velocita = document.getElementById("velocita").value; 
+        const msg = new SpeechSynthesisUtterance(testo); 
+        msg.lang = lingua; 
+        msg.rate = velocita; 
+        speechSynthesis.speak(msg); 
+    } 
+    document.getElementById("velocita").oninput = function() { 
+    document.getElementById("valoreVelocita").textContent = this.value; 
+} 
+document.getElementById("sisal").style.display="block";
+    document.getElementById("chiudisisal").style.display="block";
+    function chiudisisal(){
+        document.getElementById("sisal").style.display="none";
+        document.getElementById("chiudisisal").style.display="none";
+    }
+    function chiudiNVPN(){
+        document.getElementById("bottom-banner").style.display="none";
+        document.getElementById("chiudi").style.display="none";
+    }
+    function premium(){
+        document.getElementById("premium").style.display="block";
+        document.getElementById("tutto").style.display="none";
+        //document.getElementById("paga").style.display="block";
+        document.getElementById("smart-button-container").style.display="none";
+    }
+    function chiudipremium(){
+        document.getElementById("premium").style.display="none";
+        document.getElementById("tutto").style.display="block";
+        document.getElementById("smart-button-container").style.display="none";
+
+    }
+    function paga(){
+        document.getElementById("smart-button-container").style.display="block";
+        document.getElementById("paga").style.display="none";
+    }
+    function contactus(){
+        alert("mail: cos.reader@gmail.com  -  numero di telefono: 352 352 7898")
+    } 
+
+    </script>
+</html>
