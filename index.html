@@ -47,7 +47,11 @@
                 cursor: pointer;
             }
 
+        #sisal_div{
+            float:left
 
+
+        }
             #sisal_div:hover img#chiudisisal{
             opacity: 1;
         }
@@ -87,7 +91,7 @@
             position: fixed;
             bottom: 0;
             left: 0;
-            width: 10%;
+            width: 20%;
             z-index: 9998;
             height: 125px;
             background-color: rgb(0, 0, 0);
@@ -225,16 +229,17 @@
         </label> 
         <input id="velocita" type="range" min="0.5" max="2" step="0.1" value="1">
         </div>
-        <h2></h2><div id="sisal_div">
-    <img onclick="chiudisisal()" src="x.png" id="chiudisisal" height="30" width="30">
-    <a href="https://www.samsung.it/"><img src="samsung.png" height="100" width="220" id="sisal"></a>
-</div>
+        <h2></h2>
+        
         <div id="testo">
         <textarea rows="10" cols="60" id="text" type="text" placeholder="scrivi qui dentro ciò che vuoi"></textarea>
         </div>
         <span id="bottone">
         <h2 onclick="speak()">Leggi</h2>
-        </span>
+        </span><div id="sisal_div">
+    <img onclick="chiudisisal()" src="x.png" id="chiudisisal" height="30" width="30">
+    <a href="https://www.samsung.it/"><img src="samsung.png" height="100" width="220" id="sisal"></a>
+</div>
         <h2 id="chiudi" onclick="chiudiNVPN()">Chiudi  x</h2>
 <div id="bottom-banner"> 
     <video src="Nord VPN Commercial.mp4" autoplay muted width="80" height="50" style="z-index: 9999;" id="nvpn"></video>
@@ -258,6 +263,7 @@
   } else {
     x.style.display = "block";
   }
+  
 }
     function initPayPalButton() {
             paypal.Buttons({
@@ -269,7 +275,7 @@
                 },
                 createOrder: function (data, actions) {
                     return actions.order.create({
-                        purchase_units: [{ "amount": { "currency_code": "USD", "value": 50 } }]
+                        purchase_units: [{ "amount": { "currency_code": "USD", "value": 5 } }]
                     });
                 },
 
